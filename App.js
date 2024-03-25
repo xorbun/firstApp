@@ -10,9 +10,9 @@ export default function App() {
   const addGoalHandler = () => {
     setreachedGoals((currentReachedGoals) => [...currentReachedGoals, input]);
   };
-  const deleteAllGoals=()=>{
-    setreachedGoals("")
-  }
+  const deleteAllGoals = () => {
+    setreachedGoals("");
+  };
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
@@ -23,14 +23,23 @@ export default function App() {
         />
         <Button title="aggiungi" onPress={addGoalHandler} />
       </View>
-      <View style={styles.goals}>
-        {reachedGoals ? (
-        reachedGoals.map((goal, index) => (
-          <Text key={index}>{goal}</Text>
-        ))):''}
+      <View>
+        {reachedGoals && reachedGoals.length > 0 ? (
+          reachedGoals.map((goal, index) => (
+            <View style={styles.goalElement} key={index}>
+              <Text style={styles.goalText}>{goal}</Text>
+            </View>
+          ))
+        ) : (
+          <Text>Non ci sono elementi</Text>
+        )}
       </View>
       <View>
-        <Button style={styles.delete} onPress={deleteAllGoals} title="cancella lista"/>
+        <Button
+          style={styles.delete}
+          onPress={deleteAllGoals}
+          title="cancella lista"
+        />
       </View>
     </View>
   );
@@ -58,11 +67,16 @@ const styles = StyleSheet.create({
     marginRight: 8,
     padding: 8,
   },
-  goals: {
-    flex: 0.6,
-  },
-  delete:{
-    flex:0.2
-  }
 
+  goalElement: {
+    padding: 8,
+    margin: 8,
+    backgroundColor: "purple",
+  },
+  goalText: {
+    color: "white",
+  },
+  delete: {
+    flex: 0.2,
+  },
 });
