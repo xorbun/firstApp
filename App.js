@@ -9,6 +9,7 @@ import {
   FlatList,
   Keyboard,
 } from "react-native";
+import Goalitem from "./components/Goalitems";
 
 export default function App() {
   const [input, setinput] = useState("");
@@ -46,9 +47,7 @@ export default function App() {
           data={reachedGoals}
           renderItem={(itemData) => {
             return (
-              <View style={styles.goalElement}>
-                <Text style={styles.goalText}>{itemData.item.text}</Text>
-              </View>
+              <Goalitem text={itemData.item.text}/>
             );
           }}
           keyExtractor={(item) => {
@@ -97,15 +96,7 @@ const styles = StyleSheet.create({
     flex: 0.6,
   },
 
-  goalElement: {
-    padding: 8,
-    margin: 8,
-    backgroundColor: "#5e0acc",
-    borderRadius: 6,
-  },
-  goalText: {
-    color: "white",
-  },
+
   delete: {
     flex: 0.2,
     flexDirection: "row",
