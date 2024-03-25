@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+  FlatList,
+} from "react-native";
 
 export default function App() {
   const [input, setinput] = useState("");
@@ -8,7 +16,7 @@ export default function App() {
     setinput(enteredText);
   };
   const addGoalHandler = () => {
-    setreachedGoals((currentReachedGoals) => [...currentReachedGoals, input]);
+    setreachedGoals((currentReachedGoals) => [...currentReachedGoals, {text:input, id:Math.random().toString()}]);
   };
   const deleteAllGoals = () => {
     setreachedGoals("");
@@ -23,16 +31,20 @@ export default function App() {
         />
         <Button title="aggiungi" onPress={addGoalHandler} />
       </View>
-      <View>
-        {reachedGoals && reachedGoals.length > 0 ? (
-          reachedGoals.map((goal, index) => (
-            <View style={styles.goalElement} key={index}>
-              <Text style={styles.goalText}>{goal}</Text>
-            </View>
-          ))
-        ) : (
-          <Text>Non ci sono elementi</Text>
-        )}
+      <View style={styles.goalContainer}>
+        <FlatList
+          data={reachedGoals}
+          renderItem={(itemData) => {
+            return (
+              <View style={styles.goalElement} >
+                <Text style={styles.goalText}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item, index)=>{
+            return item.id
+          }}
+        />
       </View>
       <View>
         <Button
@@ -52,7 +64,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   inputContainer: {
-    flex: 0.3,
+    flex: 0.2,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -67,16 +79,20 @@ const styles = StyleSheet.create({
     marginRight: 8,
     padding: 8,
   },
+  goalContainer: {
+    flex: 0.7,
+  },
 
   goalElement: {
     padding: 8,
     margin: 8,
-    backgroundColor: "purple",
+    backgroundColor: "#5e0acc",
+    borderRadius: 6,
   },
   goalText: {
     color: "white",
   },
   delete: {
-    flex: 0.2,
+    flex: 0.1,
   },
 });
