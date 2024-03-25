@@ -16,7 +16,10 @@ export default function App() {
     setinput(enteredText);
   };
   const addGoalHandler = () => {
-    setreachedGoals((currentReachedGoals) => [...currentReachedGoals, {text:input, id:Math.random().toString()}]);
+    setreachedGoals((currentReachedGoals) => [
+      ...currentReachedGoals,
+      { text: input, id: Math.random().toString() },
+    ]);
   };
   const deleteAllGoals = () => {
     setreachedGoals("");
@@ -29,29 +32,29 @@ export default function App() {
           placeholder="risultati"
           onChangeText={goalImputHandler}
         />
-        <Button title="aggiungi" onPress={addGoalHandler} />
+        <View style={styles.buttonimput}>
+        <Button color={'white'} title="aggiungi" onPress={addGoalHandler} />
+        </View>
       </View>
       <View style={styles.goalContainer}>
         <FlatList
           data={reachedGoals}
           renderItem={(itemData) => {
             return (
-              <View style={styles.goalElement} >
+              <View style={styles.goalElement}>
                 <Text style={styles.goalText}>{itemData.item.text}</Text>
               </View>
             );
           }}
-          keyExtractor={(item, index)=>{
-            return item.id
+          keyExtractor={(item) => {
+            return item.id;
           }}
         />
       </View>
-      <View>
-        <Button
-          style={styles.delete}
-          onPress={deleteAllGoals}
-          title="cancella lista"
-        />
+      <View style={styles.delete}>
+        <View style={styles.deleteButton}>
+          <Button color="white" onPress={deleteAllGoals} title="cancella lista" />
+        </View>
       </View>
     </View>
   );
@@ -62,6 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 12,
+    backgroundColor:'#F8F8FF'
   },
   inputContainer: {
     flex: 0.2,
@@ -78,9 +82,14 @@ const styles = StyleSheet.create({
     width: "70%",
     marginRight: 8,
     padding: 8,
+    backgroundColor:'white'
+  },
+  buttonimput:{
+    backgroundColor:'#1E90FF',
+    borderRadius:6
   },
   goalContainer: {
-    flex: 0.7,
+    flex: 0.6,
   },
 
   goalElement: {
@@ -93,6 +102,16 @@ const styles = StyleSheet.create({
     color: "white",
   },
   delete: {
-    flex: 0.1,
+    flex: 0.2,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
+  deleteButton: {
+    backgroundColor: "red",
+    color: "white",
+    width: 160,
+    borderRadius: 6,
+  },
+  
 });
