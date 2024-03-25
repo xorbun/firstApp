@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   FlatList,
+  Keyboard,
 } from "react-native";
 
 export default function App() {
@@ -24,7 +25,11 @@ export default function App() {
   const deleteAllGoals = () => {
     setreachedGoals("");
   };
+  const hideKeyboard=()=>{
+    Keyboard.dismiss()
+  }
   return (
+    
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
         <TextInput
@@ -33,7 +38,7 @@ export default function App() {
           onChangeText={goalImputHandler}
         />
         <View style={styles.buttonimput}>
-        <Button color={'white'} title="aggiungi" onPress={addGoalHandler} />
+        <Button color={'white'} title="aggiungi" onPress={()=>{addGoalHandler(),hideKeyboard()}} />
         </View>
       </View>
       <View style={styles.goalContainer}>
