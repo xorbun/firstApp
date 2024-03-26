@@ -1,23 +1,13 @@
 import { useState } from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  ScrollView,
-  FlatList,
-  Keyboard,
-} from "react-native";
+import { Button, StyleSheet, View, FlatList } from "react-native";
 import Goalitem from "./components/Goalitems";
+import Goalimput from "./components/Goalimput";
+import DeleteAll from "./components/DeleteAll";
 
 export default function App() {
-  const [input, setinput] = useState("");
   const [reachedGoals, setreachedGoals] = useState([]);
-  const goalImputHandler = (enteredText) => {
-    setinput(enteredText);
-  };
-  const addGoalHandler = () => {
+
+  const addGoalHandler = (input) => {
     setreachedGoals((currentReachedGoals) => [
       ...currentReachedGoals,
       { text: input, id: Math.random().toString() },
@@ -26,28 +16,25 @@ export default function App() {
   const deleteAllGoals = () => {
     setreachedGoals("");
   };
-  const hideKeyboard=()=>{
-    Keyboard.dismiss()
-  }
+  const deleter = (id) => {
+    setreachedGoals((currentReachedGoals) => {
+      return currentReachedGoals.filter((goal) => goal.id !== id);
+    });
+  };
+
   return (
-    
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="risultati"
-          onChangeText={goalImputHandler}
-        />
-        <View style={styles.buttonimput}>
-        <Button color={'white'} title="aggiungi" onPress={()=>{addGoalHandler(),hideKeyboard()}} />
-        </View>
-      </View>
+      <Goalimput onAddGoal={addGoalHandler} />
       <View style={styles.goalContainer}>
         <FlatList
           data={reachedGoals}
           renderItem={(itemData) => {
             return (
-              <Goalitem text={itemData.item.text}/>
+              <Goalitem
+                text={itemData.item.text}
+                deletedItem={deleter}
+                id={itemData.item.id}
+              />
             );
           }}
           keyExtractor={(item) => {
@@ -55,11 +42,7 @@ export default function App() {
           }}
         />
       </View>
-      <View style={styles.delete}>
-        <View style={styles.deleteButton}>
-          <Button color="white" onPress={deleteAllGoals} title="cancella lista" />
-        </View>
-      </View>
+      <DeleteAll input={deleteAllGoals}/>
     </View>
   );
 }
@@ -69,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 12,
-    backgroundColor:'#F8F8FF'
+    backgroundColor: "#F8F8FF",
   },
   inputContainer: {
     flex: 0.2,
@@ -86,28 +69,15 @@ const styles = StyleSheet.create({
     width: "70%",
     marginRight: 8,
     padding: 8,
-    backgroundColor:'white'
+    backgroundColor: "white",
   },
-  buttonimput:{
-    backgroundColor:'#1E90FF',
-    borderRadius:6
+  buttonimput: {
+    backgroundColor: "#1E90FF",
+    borderRadius: 6,
   },
   goalContainer: {
     flex: 0.6,
   },
 
-
-  delete: {
-    flex: 0.2,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  deleteButton: {
-    backgroundColor: "red",
-    color: "white",
-    width: 160,
-    borderRadius: 6,
-  },
   
 });
