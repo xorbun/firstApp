@@ -8,7 +8,7 @@ const Goalimput = (props) => {
   };
   const addGoalHandler = () => {
     props.onAddGoal(input);
-    
+    setinput('');
   };
   const hideKeyboard = () => {
     Keyboard.dismiss();

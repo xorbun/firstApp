@@ -42,7 +42,7 @@ export default function App() {
           }}
         />
       </View>
-      <DeleteAll input={deleteAllGoals}/>
+      <DeleteAll input={deleteAllGoals} />
     </View>
   );
 }
