@@ -6,6 +6,7 @@ const Goalimput = (props) => {
   const goalImputHandler = (enteredText) => {
     setinput(enteredText);
   };
+  
   const addGoalHandler = () => {
     props.onAddGoal(input);
     setinput('');
