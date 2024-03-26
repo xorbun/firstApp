@@ -11,9 +11,7 @@ const Goalimput = (props) => {
     props.onAddGoal(input);
     setinput("");
   };
-  const hideKeyboard = () => {
-    Keyboard.dismiss();
-  };
+ 
   return (
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputContainer}>
@@ -29,9 +27,7 @@ const Goalimput = (props) => {
             <Button
               color={"white"}
               title="aggiungi"
-              onPress={() => {
-                addGoalHandler(), hideKeyboard();
-              }}
+              onPress={addGoalHandler}
             />
           </View>
           <View style={styles.deleteBottom}>
